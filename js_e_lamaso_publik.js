@@ -2584,10 +2584,12 @@ function koreksiessay(bid) {
         }
 
         var tengahdulu = document.createElement("center");
+        tengahdulu.setAttribute("style", "background-color:yellow");
         var inputidbaris = document.createElement("input");
         inputidbaris.setAttribute("id", "brs");
         inputidbaris.setAttribute("value", bid.split("<|>")[0]);
         inputidbaris.setAttribute("disabled", "true");
+        inputidbaris.setAttribute("style", "display:none");
 
         var inputnilaikoreksi = document.createElement("input");
         inputnilaikoreksi.setAttribute("type", "number");
@@ -2597,16 +2599,91 @@ function koreksiessay(bid) {
         var tombolkirim = document.createElement("button");
         tombolkirim.setAttribute("onclick", "siapkirimnilai()")
         tombolkirim.innerHTML = "Beri Nilai";
+        var tombolprint = document.createElement("button")
+        tombolprint.setAttribute("onclick", "printlembarjawaban()")
+        tombolprint.innerHTML = "<i class='fa fa-print'> Print "
+
 
         tengahdulu.appendChild(inputidbaris);
+        tengahdulu.innerHTML += "Preview Nilai Essay : "
         tengahdulu.appendChild(inputnilaikoreksi);
         tengahdulu.appendChild(tombolkirim);
-        document.getElementById("isipetunjuk").appendChild(tengahdulu);
+        tengahdulu.innerHTML += " Cetak Jawaban ini: "
+        tengahdulu.appendChild(tombolprint);
+        //document.getElementById("isipetunjuk").appendChild(tengahdulu);
+        document.getElementById("isipetunjuk").after(tengahdulu);
 
     })
 
 
 
+}
+
+function printlembarjawaban() {
+    alert("akan mencetak")
+    var id = "isipetunjuk";
+    var h1 = "";
+    var h2 = "";
+    var html = document.getElementById("iframeprint");
+    var isi = html.contentDocument;
+    var headnya = isi.head;
+    while (headnya.hasChildNodes()) {
+        headnya.removeChild(headnya.firstChild);
+    }
+    //var bodynya = isi.body;
+    //bodynya="";
+
+    var titlee = document.createElement("title");
+    var teksjudul = document.createTextNode(":: e-LAMASO Jawaban::")
+    titlee.appendChild(teksjudul)
+    headnya.appendChild(titlee);
+    var css = '@page { size: portrait;}';
+    //head = document.head || document.getElementsByTagName('head')[0],
+    var style = document.createElement('style');
+    var cssd = '.w3-circle{border-radius:50%} .versii-table {width:950px;max-width:100%;border-collapse:collapse}.versii-table th,.versii-table td,.versii-table tr {border:1px solid #000;color:#000;padding:5px 10px 5px 10px}.versii-table th{background-color:#eee;color:blue;vertical-align:middle;text-align:center}.versii-table tr:nth-of-type(even) td{border:0;background-color:#fff;border:1px solid #000}versii-table tr:nth-of-type(odd) td{border:0;background-color:#eef;border:1px solid #000}.versi-table {width:auto;max-width:100%;border-collapse:collapse}.versi-table th,.versi-table td,.versi-table tr {border:1px solid #000;color:#000;padding:5px 10px 5px 10px}.versi-table th{background-color:#eee;color:blue;vertical-align:middle;text-align:center}.versi-table tr:nth-of-type(even) td{border:0;background-color:#fff;border:1px solid #000}versi-table tr:nth-of-type(odd) td{border:0;background-color:#eef;border:1px solid #000}';
+    style.type = 'text/css';
+    style.media = 'print';
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+
+    }
+    var d = new Date();
+    var tglakhirr = d.getDate();
+    var blnakhirr = d.getMonth();
+    var namabulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    var thnakhirr = d.getFullYear();
+    var tglakhir = d.getDate(); //daysInMonth(blnakhirr+1,thnakhirr);
+    var namakepsekku = document.getElementById('namakepsek').innerHTML;
+    var nipkepsekku = document.getElementById('nipkepsek').innerHTML;
+    var guruapa = document.getElementById("namakota").innerHTML; //document.getElementById("tblguru").innerHTML + " " + document.getElementById("namakota").innerHTML; // document.frmlogin.kelasguru.value;
+    var namaguruku = document.getElementById('namagurux').innerHTML;
+    var nipguruku = document.getElementById('nipgurux').innerHTML;
+
+    headnya.appendChild(style);
+    headnya.innerHTML += '<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">';
+    headnya.innerHTML += '<link rel="stylesheet" href="https://e-lamaso.github.io/e_lamaso_guru/e_lamaso_publick.css">';
+
+    var bodynya = isi.body;
+    //var teksbody =document.getElementById(id).innerHTML;
+    var teksbody = document.getElementById(id).outerHTML;
+    bodynya.innerHTML = "";
+    bodynya.innerHTML = '<style>' + cssd + '</style>';
+    // bodynya.innerHTML += '<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">';
+    // bodynya.innerHTML += '<link rel="stylesheet" href="https://e-lamaso.github.io/e_lamaso_guru/e_lamaso_publick.css">';
+    bodynya.innerHTML += '<h1 style="text-align:center">' + h1 + '</h1>';
+    bodynya.innerHTML += '<h2 style="text-align:center">' + h2 + '</h2>';
+    bodynya.innerHTML += teksbody;
+    bodynya.innerHTML += '<br/><br/><br/>';
+    bodynya.innerHTML += '<div style="float:left;position:relative;margin-left:50px;text-align:center">Mengetahui,<br/>Kepala ' + keyidsekolah.innerHTML + '<br/><br/><br/><br/><br/><u><b>' + namakepsekku + '</b></u><br/>NIP. ' + nipkepsekku + '</div>'; //namasekolahku + '<br/><br/><br/><br/><br/><u><b>' + namakepsekku + '</b></u><br/>NIP. ' + nipkepsekku + '</div>';
+    bodynya.innerHTML += '<div style="float:right;position:relative;text-align:center">' + namakotaku + ', ' + tglakhir + ' ' + namabulan[blnakhirr] + ' ' + thnakhirr + '<br/>' + guruapa + '<br/><br/><br/><br/><br/><b><u>' + namaguruku + '</u></b><br/>NIP. ' + nipguruku + '</div>';
+    //bodynya.innerHTML+='<br/><br/><br/>'+guruapa+'<br/><br/><br/><b><u>'+namaguruku+'</u></b><br/>NIP. '+nipguruku+'</div>';
+
+
+    window.frames["iframeprint"].focus();
+    window.frames["iframeprint"].print();
 }
 
 function siapkirimnilai() {
