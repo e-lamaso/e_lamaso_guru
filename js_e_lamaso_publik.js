@@ -73,7 +73,12 @@ $(document).ready(function () {
             var trb = ut.insertRow(-1);
             for (k in json.records[0]) {
                 var cell = trb.insertCell(-1);
-                cell.innerHTML = json.records[j][k]
+                //kon
+                if (k == "password") {
+                    cell.innerHTML = window.btoa(json.records[j][k])
+                } else {
+                    cell.innerHTML = json.records[j][k]
+                }
             }
 
         }
@@ -312,12 +317,16 @@ function gurulogin() { // saat user mengisi user dan password
     var passwordvalue = document.frmlogin.passwordlogin; //getElementById("password");
 
     for (i = 0; i < tabel.length; i++) {
-        if (tabel[i].cells[1].innerHTML == usernamevalue.value && tabel[i].cells[2].innerHTML == passwordvalue.value && tabel[i].cells[4].innerHTML == "terverifikasi") {
+        var passcode = window.atob(tabel[i].cells[2].innerHTML);
+        //if (tabel[i].cells[1].innerHTML == usernamevalue.value && tabel[i].cells[2].innerHTML == passwordvalue.value && tabel[i].cells[4].innerHTML == "terverifikasi") {
+        if (tabel[i].cells[1].innerHTML == usernamevalue.value && passcode == passwordvalue.value && tabel[i].cells[4].innerHTML == "terverifikasi") {
             loaderform.innerHTML = "Selamat, akun yang Anda isi sudah benar";
             var id = i
             guruloginasal(id)
             break; //kalo udah ketemu berhenti dulu loopingnya.
-        } else if (tabel[i].cells[1].innerHTML == usernamevalue.value && tabel[i].cells[2].innerHTML == passwordvalue.value && tabel[i].cells[4].innerHTML == "") {
+            //} else if (tabel[i].cells[1].innerHTML == usernamevalue.value && tabel[i].cells[2].innerHTML == passwordvalue.value && tabel[i].cells[4].innerHTML == "") {
+
+        } else if (tabel[i].cells[1].innerHTML == usernamevalue.value && passcode == passwordvalue.value && tabel[i].cells[4].innerHTML == "") {
             loaderform.innerHTML = "Akun Anda sudah terdaftar, sayangnya .... Anda belum memverifikasi email Anda. Mohon cek inbox dari kami untuk memverifikasi registrasi.";
             break;
         } else {
@@ -435,7 +444,7 @@ function tabeldatakelassaya(id) { //menampilkan tabel data kelas
     tempattabel.innerHTML = "<h3>Daftar Siswa Kelas " + document.getElementById("kelassayapilih").innerHTML + "</div>";
 
     document.getElementById("cetakdatasiswa").removeAttribute("onclick");
-    document.getElementById("cetakdatasiswa").setAttribute("onclick", "cetakini()");
+    document.getElementById("cetakdatasiswa").setAttribute("onclick", "alert('Edit data siswa melalui Edit Profil Anda')");
 
 
     var tb = document.createElement("table")
@@ -619,7 +628,7 @@ function daftarelamaso() { //fungsi tombol untuk mengirimkan data ke server
 
             if (xhr.readyState === 4 && xhr.status === 200) {
 
-                prosesloadingdaftar.innerHTML = "Terima kasih, telah mendaftar. Mohon cek email Anda dan verifikasikan bahwa ini benar-benar Anda. Hal ini bertujuan untuk mengirimkan file ke Google Drive Anda. <br/> pengen cek:" + xhr.responseText;
+                prosesloadingdaftar.innerHTML = "Terima kasih, telah mendaftar. Mohon cek email Anda dan verifikasikan bahwa ini benar-benar Anda. Hal ini bertujuan untuk mengirimkan file ke Google Drive Anda. ";
                 document.getElementById("tutupeksekusitambahuser").removeAttribute("onclick");
                 document.getElementById("tutupeksekusitambahuser").setAttribute("onclick", "reloaddatauser()");
 
@@ -688,6 +697,19 @@ function fn2lihatpassword() { // fungsi untuk melihat input password (dalam simb
 function fnlihatpassword() { // fungsi untuk melihat input password (dalam simbol atau teks biasa)
     var x = document.getElementById("password");
     var label = document.getElementById("lihatpassword");
+    if (x.type === "password") {
+        x.type = "text";
+        label.innerHTML = "<i class='fa fa-eye-slash'></i> Sembunyikan Password"
+    } else {
+        x.type = "password";
+        label.innerHTML = "<i class='fa fa-eye'></i> Lihat Password"
+    }
+
+}
+
+function fnlihatpasswordedit() { // fungsi untuk melihat input password (dalam simbol atau teks biasa)
+    var x = document.getElementById("passwordedit");
+    var label = document.getElementById("lihatpasswordedit");
     if (x.type === "password") {
         x.type = "text";
         label.innerHTML = "<i class='fa fa-eye-slash'></i> Sembunyikan Password"
@@ -3130,7 +3152,8 @@ function Anjangsana() {
                 //var arraysuka = siapayangsuka; //.join("\r\n");
                 spansuka.setAttribute("title", tekstitle);
                 spansuka.setAttribute("style", "cursor:pointer");
-                spansuka.setAttribute("onclick", "siapayangsuka('" + siapayangsuka + "')");
+                var idund = siapayangsuka.join("_");
+                spansuka.setAttribute("onclick", "siapayangsuka('" + idund + "')");
 
 
                 spansuka.innerHTML = tekssuka;
@@ -3156,7 +3179,8 @@ function Anjangsana() {
                 //var arraysuka = siapayangsuka; //.join("\r\n");
                 spansuka.setAttribute("title", tekstitle);
                 spansuka.setAttribute("style", "cursor:pointer");
-                spansuka.setAttribute("onclick", "siapayangsuka('" + siapayangsuka + "')");
+                var idund = siapayangsuka.join("_");
+                spansuka.setAttribute("onclick", "siapayangsuka('" + idund + "')");
 
 
                 spansuka.innerHTML = tekssuka;
@@ -3493,7 +3517,8 @@ function AnjangsanaUpdateterus() {
                 //var arraysuka = siapayangsuka; //.join("\r\n");
                 spansuka.setAttribute("title", tekstitle);
                 spansuka.setAttribute("style", "cursor:pointer");
-                spansuka.setAttribute("onclick", "siapayangsuka('" + siapayangsuka + "')");
+                var idund = siapayangsuka.join("_");
+                spansuka.setAttribute("onclick", "siapayangsuka('" + idund + "')");
 
 
                 spansuka.innerHTML = tekssuka;
@@ -3519,7 +3544,8 @@ function AnjangsanaUpdateterus() {
                 //var arraysuka = siapayangsuka; //.join("\r\n");
                 spansuka.setAttribute("title", tekstitle);
                 spansuka.setAttribute("style", "cursor:pointer");
-                spansuka.setAttribute("onclick", "siapayangsuka('" + siapayangsuka + "')");
+                var idund = siapayangsuka.join("_");
+                spansuka.setAttribute("onclick", "siapayangsuka('" + idund + "')");
 
 
                 spansuka.innerHTML = tekssuka;
@@ -3898,7 +3924,7 @@ function tentangdiatabel(id) {
 function siapayangsuka(id) {
     document.getElementById('modalpetunjuk').style.display = 'block';
     document.getElementById("judulpetunjuk").innerHTML = "Sahabat Menyukai ini";
-    var idx = id.split(",")
+    var idx = id.split("_")
     document.getElementById("isipetunjuk").innerHTML = idx.join("<br/>");
 }
 
@@ -3985,5 +4011,199 @@ function potodia(id) {
 
     var kontent = "<img src='https://drive.google.com/uc?export=view&id=" + idgambar + "' style='width:98%;border:1px solid blue;border-radius:15px;margin:0px auto'/>";
     document.getElementById("isipetunjuk").innerHTML = kontent; //document.getElementById("petunjukuploadmateri").outerHTML;
+
+}
+
+function editprofildata() {
+    document.getElementById("modallogin").style.display = "none";
+    modaledituser.style.display = "block";
+    w3_close();
+
+    var kolomheader = document.getElementById("id_tabel_user").rows[0].cells;
+
+    var header = []
+    for (a = 0; a < kolomheader.length; a++) {
+        header.push(kolomheader[a].innerHTML)
+    }
+
+    var refrensibaris = (document.getElementById("keyidpendaftar").innerHTML * 1) - 1;
+
+    var datapengedit = document.getElementById("id_tabel_user").rows[refrensibaris].cells;
+    var datanya = []
+    for (b = 0; b < datapengedit.length; b++) {
+        datanya.push(datapengedit[b].innerHTML)
+    }
+
+    var elementform = document.getElementById("formedituser").elements;
+    for (c = 0; c < header.length; c++) {
+        //document.edituser[name = header[c]].value = c;;
+
+        //isipetunjuk.innerHTML += header[c] + " = " + datanya[c] + "<br/>"
+
+    }
+    //koleksinama
+    for (x = 0; x < elementform.length; x++) {
+        //for (c = 0; c < header.length; c++) {
+        if (elementform[x].type !== "file") {
+            for (d = 0; d < header.length; d++) {
+                if (elementform[x].name == header[d]) {
+                    if (elementform[x].name == "password") {
+                        elementform[x].value = window.atob(datanya[d])
+                    } else {
+                        elementform[x].value = datanya[d]
+                    };
+
+                }
+            }
+        }
+        //}
+    }
+    document.getElementById("avatarkuedit").removeAttribute("src");
+    document.getElementById("avatarkuedit").setAttribute("src", "https://drive.google.com/uc?export=view&id=" + datanya[13]);
+    var sumberdataanak = document.getElementById("myTable").rows;
+    prev_upload_datasiswaedit.innerHTML = "";
+    if (document.getElementById("myTable") !== null) {
+        for (r = 1; r < sumberdataanak.length; r++) {
+            var op = document.createElement("option");
+            op.setAttribute("value", sumberdataanak[r].cells[5].innerHTML);
+            op.innerHTML = sumberdataanak[r].cells[5].innerHTML;
+            prev_upload_datasiswaedit.appendChild(op)
+        }
+    }
+
+
+}
+
+function ungg_avataredit() {
+    var item = document.getElementById("upl_avataredit").files[0]
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(item);
+
+    oFReader.onload = function (oFREvent) {
+        document.getElementById("avatarkuedit").src = oFREvent.target.result;
+        //tapi kita ingin mengecilkan ukurannya menjadi width = 150 px;
+
+        //document.getElementById("idpoto_potoguru").value = srcEncode; //oFREvent.target.result;
+        var tempatidpotoguru = document.getElementById("idpoto_potoguruedit")
+        tempatidpotoguru.innerHTML = "";
+        // buat generate input
+        var inputbase64 = document.createElement("input");
+        inputbase64.setAttribute("name", "data");
+        inputbase64.value = oFREvent.target.result.replace(/^.*,/, '');
+        var inputfilename = document.createElement("input");
+        inputfilename.setAttribute("name", "filename");
+        inputfilename.value = "avatar_" + guru_namalengkapedit.value.toUpperCase().replace(/\s+/, "_");
+        var inputmimetype = document.createElement("input");
+        inputmimetype.setAttribute("name", "mimeType")
+        inputmimetype.value = "data:image/jpg"; //e.target.result.match(/^.*(?=;)/)[0]
+        //sekarang kita taroh di sini:
+        tempatidpotoguru.appendChild(inputbase64);
+        tempatidpotoguru.appendChild(inputfilename);
+        tempatidpotoguru.appendChild(inputmimetype);
+
+
+
+
+    }
+}
+
+function tomboledituser() { //fungsi tombol untuk mengirimkan data ke server
+    //sembunyikan dulu form-nya;
+    if (validationedit()) {
+        document.getElementById("formedituser").style.display = "none";
+        document.getElementById("registrasikanedit").style.display = "none"; // menghindari user mengeklik beberapa kali
+        document.getElementById("prosesloadingdaftaredit").innerHTML = "<i class='fa fa-spin fa-spinner' style='font-size:36px;color:blue'></i> Sedang Proses ...."
+        var dataku = $('#formedituser').serialize();
+        dataku += "&brs=" + keyidpendaftar.innerHTML;
+        var link = script_url + "?action=editdaftar";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", link, true)
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState === 4 && xhr.status === 200) {
+
+                prosesloadingdaftaredit.innerHTML = "Terima kasih, Data Anda berhasil disimpan.";
+                document.getElementById("tutupeksekusiedituser").removeAttribute("onclick");
+                document.getElementById("tutupeksekusiedituser").setAttribute("onclick", "reloaddatauser()");
+
+            }
+        };
+        // url encode form data for sending as post data
+
+        xhr.send(dataku);
+
+
+    }
+}
+
+// Name And Email Validation Function
+function validationedit() {
+    var name = document.getElementById("usernameedit").value;
+    var email = document.getElementById("emailedit").value;
+    var sekolah = document.getElementById("sekolahedit").value;
+    var kelas = document.getElementById("kelasedit").value;
+    // var datain = document.getElementById("data");
+    var dividpoto_potoguru = document.getElementById("idpoto_potoguruedit").innerHTML;
+    var diidnp_datasiswa = document.getElementById("idnp_dataanakedit").innerHTML;
+    var emailReg = email.indexOf("@gmail.com"); ///^([w-.]+@([w-]+.)+[w-]{2,4})?$/;
+    if (name === '' || email === '' || sekolah === '' || diidnp_datasiswa === '' || dividpoto_potoguru === '' || kelas === '') {
+        alert("Mohon lengkapi formulir ini dengan lengkap! \r\n Terutama: email, Nama Pengguna, Nama Sekolah, Kelas, termasuk poto dan unggahan daftar kelas Anda (Notepad)");
+        return false;
+    } else if (emailReg < 0) {
+        alert("Format email Anda salah. Mohon gunakan akun Gmail ya ...");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function ungg_np_datasiswaedit() { // fungsi untuk mengupload file Notepad yng dijadikan base64 dan preview
+    var item = document.getElementById("upnp_datasiswaedit").files[0]
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(item);
+
+    oFReader.onload = function (oFREvent) {
+        // document.getElementById("idnp_dataanak").value = oFREvent.target.result;
+
+        // //document.getElementById("idpoto_potoguru").value = srcEncode; //oFREvent.target.result;
+        var tempatidpotoguru = document.getElementById("idnp_dataanakedit")
+        tempatidpotoguru.innerHTML = "";
+        // buat generate input
+        var inputbase64 = document.createElement("input");
+        inputbase64.setAttribute("name", "data");
+        inputbase64.value = oFREvent.target.result.replace(/^.*,/, '');
+        var inputfilename = document.createElement("input");
+        inputfilename.setAttribute("name", "filename");
+        inputfilename.value = "idnp_dataanak"; //+ guru_namalengkap.innerHTML.toUpperCase().replace(/\s+/, "_");
+        var inputmimetype = document.createElement("input");
+        inputmimetype.setAttribute("name", "mimeType")
+        inputmimetype.value = oFREvent.target.result.match(/^.*(?=;)/)[0];
+        //sekarang kita taroh di sini:
+        tempatidpotoguru.appendChild(inputbase64);
+        tempatidpotoguru.appendChild(inputfilename);
+        tempatidpotoguru.appendChild(inputmimetype);
+
+    };
+    // reader untuk menampilkan preview
+    var tempatselek = document.getElementById("prev_upload_datasiswaedit");
+    tempatselek.innerHTML = "";
+    var opsiawal = document.createElement("option");
+    opsiawal.setAttribute("value", "Belum Pilih Nama")
+    opsiawal.innerHTML = "Pilih Nama Siswa"
+    tempatselek.appendChild(opsiawal);
+    var ofprev = new FileReader();
+    ofprev.onload = function () {
+        var data = ofprev.result
+        var arrdata = data.split("\r\n")
+        for (i = 0; i < arrdata.length; i++) {
+            var opsi = document.createElement("option");
+            opsi.setAttribute("value", arrdata[i])
+            opsi.innerHTML = arrdata[i].toUpperCase()
+            tempatselek.appendChild(opsi)
+        }
+    }
+    ofprev.readAsText(item)
 
 }
