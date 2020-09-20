@@ -19,7 +19,7 @@ var urlsekolah = "www.sdnratujaya1.net";
 var timerAnjangsana;
 /// script JQuery
 $(document).ready(function () {
-    timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
+    //timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
 
     // Panggil data sekolah
     var namasekolah, namakota, tekstapel, tapel
@@ -2953,7 +2953,7 @@ function Anjangsana() {
             // console.log(kodeidkomen);
             var lkomen = document.createElement("button");
             lkomen.setAttribute("type", "button");
-            lkomen.setAttribute("class", "w3-button   w3-col s6 w3-margin-bottom");
+            lkomen.setAttribute("class", "w3-button w3-col s6 w3-margin-bottom stoptimer");
             lkomen.setAttribute("id", "btnkomen" + i);
             lkomen.setAttribute("onclick", kodeidkomen);
             lkomen.innerHTML = "<i class='fa fa-comment'></i> Sapa";
@@ -3098,33 +3098,46 @@ function Anjangsana() {
             }
             rekstatus.appendChild(divclass1);
 
-            //document.getElementById("teksinputstatus").innerHTML = "Sapa Sahabat Guru ...";
+            document.getElementById("teksinputstatus").innerHTML = "Sapa Sahabat Guru ...";
             document.getElementById("datauploadstatus").innerHTML = "";
             document.getElementById("mediastatus").innerHTML = "";
 
 
         }
     })
+    clearInterval(timerAnjangsana);
     timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
-    //console.log(timerAnjangsana)
+
 
 
 }
 
+teksinputstatus.addEventListener("click", function () {
+    //alert("mau ngetik, saya matiin dulu timer updatenya");
+    teksinputstatus.innerHTML = "";
+    clearInterval(timerAnjangsana);
+})
+uploadpotostatus.addEventListener("click", function () {
+    //alert("tambahkan fungsi lagi");
+    clearInterval(timerAnjangsana)
+})
+
 
 //var tx = document.getElementById("teksinputstatus").innerHTML; //$(this).HTML();
-var kodechr = ""
-var dteks = document.getElementById("teksinputstatus");
-$("#teksinputstatus, .janganubah").keypress(function (e) {
-    //console.log(e.which)
-    // if (kodechr !== e.which) {
-    if (e.which !== "") {
-        clearInterval(timerAnjangsana)
+// var kodechr = ""
+// var dteks = document.getElementById("teksinputstatus");
+// $("#teksinputstatus, .janganubah").keypress(function (e) {
+//     //console.log(e.which)
+//     // if (kodechr !== e.which) {
+//     if (e.which !== "") {
+//         clearInterval(timerAnjangsana)
 
 
-    }
+//     }
 
-})
+// })
+
+
 // dteks.addEventListener("keypress", function (e) {
 //     kodechr = e.which;
 //     if (kodechr !== "") {
@@ -3303,7 +3316,7 @@ function AnjangsanaUpdateterus() {
             // console.log(kodeidkomen);
             var lkomen = document.createElement("button");
             lkomen.setAttribute("type", "button");
-            lkomen.setAttribute("class", "w3-button   w3-col s6 w3-margin-bottom");
+            lkomen.setAttribute("class", "w3-button   w3-col s6 w3-margin-bottom stoptimer");
             lkomen.setAttribute("id", "btnkomen" + i);
             lkomen.setAttribute("onclick", kodeidkomen);
             lkomen.innerHTML = "<i class='fa fa-comment'></i> Sapa";
@@ -3448,13 +3461,17 @@ function AnjangsanaUpdateterus() {
             }
             rekstatus.appendChild(divclass1);
 
-            //document.getElementById("teksinputstatus").innerHTML = "Sapa Sahabat Guru ...";
-            document.getElementById("datauploadstatus").innerHTML = "";
-            document.getElementById("mediastatus").innerHTML = "";
+            // document.getElementById("teksinputstatus").innerHTML = "Sapa Sahabat Guru ...";
+            // document.getElementById("datauploadstatus").innerHTML = "";
+            // document.getElementById("mediastatus").innerHTML = "";
 
 
         }
     })
+
+
+
+    // $("#teksinputstatus, .janganubah")
 
 }
 
@@ -3656,7 +3673,8 @@ function generatestatusanjangsana() {
 }
 
 function komenin(id) {
-    clearInterval(timerAnjangsana);
+    //console.log(timerAnjangsana);
+    // clearInterval(timerAnjangsana);
 
     //var kodeidkomen = "komenin('" + (i + 2) + "_" + siapayangkomen + "_" + komenkeberapa + "')";
     var idx = id.split("_");
@@ -3683,7 +3701,7 @@ function komenin(id) {
     var elemencar = $(divanak).parents(divbapa).length;
 
     if (elemencar == 0) {
-        clearInterval(timerAnjangsana);
+        // clearInterval(timerAnjangsana);
         //$(".child-element").parents("#main-nav").length == 1 
 
         var divkomenbaru = document.createElement("div");
@@ -3703,9 +3721,13 @@ function komenin(id) {
 
         tempatkomen.after(tombol);
         tempatkomen.after(divkomenbaru);
+
         tempatkomen.after(hr);
         tempatkomen.innerHTML = "<i class='fa fa-comment'></i> Batal Menyapa";
+        tempatkomen.setAttribute("class", "w3-button   w3-col s6 w3-margin-bottom mulaitimer");
+        clearInterval(timerAnjangsana);
     } else {
+        //clearInterval(timerAnjangsana);
         var dom = document.getElementById("tekskomenbaru" + statuske);
         var domhr = document.getElementById("hr" + statuske);
         var domtombol = document.getElementById("kirimkomentar");
@@ -3713,10 +3735,15 @@ function komenin(id) {
         domhr.remove();
         domtombol.remove();
         tempatkomen.innerHTML = "<i class='fa fa-comment'></i> Sapa";
+        tempatkomen.setAttribute("class", "w3-button   w3-col s6 w3-margin-bottom stoptimer");
+        timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
     }
+    // console.log(timerAnjangsana);
+    //clearInterval(timerAnjangsana);
 }
 
 function kirimkomentar(id) {
+    //clearInterval(timerAnjangsana);
     var kodeid = id.split("_");
     var key1 = "avatarkomen" + kodeid[2];
     var key2 = "siapakomen" + kodeid[2];
@@ -3749,7 +3776,7 @@ function kirimkomentar(id) {
     html += "&" + key2 + "=" + encodeURIComponent(namasiapakomen);
     html += "&" + key3 + "=" + encodeURIComponent(d);
     html += "&" + key4 + "=" + encodeURIComponent(isikomen);
-    console.log(html)
+    //console.log(html)
 
     // var html = yangpunyastatus+"=" + kodeid[0];//+ encodeURIComponent(emailnya); // baris status di SS
     // html += "&=" + encodeURIComponent(database64);
