@@ -92,6 +92,9 @@
                     Semester</a>
                 <a href="#" class="w3-bar-item w3-button w3-padding" onclick="Anjangsana()"><i class="fa fa-users"></i> 
                     Anjangsana</a>
+                <a href="#" class="w3-bar-item w3-button w3-padding" onclick="editprofildata()"><i
+                        class="fa fa-user-circle-o"></i> 
+                    Edit Profil</a>
                 <a href="#" class="w3-bar-item w3-button w3-padding" onclick="logout()"><i class="fa fa-times"></i> 
                     Logout</a>
 
@@ -802,7 +805,7 @@
                 </div>
             </div>
             <hr />
-            <button id="cetakdatasiswa"><i class="fa fa-print"></i> Cetak</button>
+            <button id="cetakdatasiswa"><i class="fa fa-pencil-square-o"></i> Edit Data Siswa</button>
             <div id="tabeltempatdaftarkelassaya" style="width:100%;font-size:10px;overflow-x:auto">
 
                 TABEL MEMUUAT EDIT, HAPUS DI KOLOM TABEL<br /><br />
@@ -1476,6 +1479,109 @@
             <button onclick="daftarelamaso()" id="registrasikan" class="login">Registrasi</button>
             <button onclick="document.getElementById('modaltambahuser').style.display='none'"
                 id="tutupeksekusitambahuser" class="login">Tutup</button>
+        </div>
+    </div>
+
+    <!--  08 modaledituser -->
+    <div id="modaledituser" class="modal">
+        <div class="modal-contentt container animate">
+            <div class="imgcontainer">
+                <img src="https://1.bp.blogspot.com/-wWPZEohYj_k/Xe_ZUEPgB3I/AAAAAAAAOgY/7idyYLxlmqgwHo6TJ9QQK0sC_MQgmBXrwCLcBGAsYHQ/s1600/logo%2Blamaso.jpg"
+                    style="width:90px;height:90px;border:1px solid blue" class="w3-circle" /><br />
+                <h3 id="judulpetunjukedit">Edit User</h3>
+                <span onclick="document.getElementById('modaledituser').style.display='none';" class="close"
+                    title="Tutup Form">&times;</span>
+            </div>
+            <div id="divedituser">
+                <form id="formedituser" name="formedituser">
+                    <fieldset style="border:1px solid red;padding:5px;border-radius: 5px;background-color: aquamarine;">
+                        <label for="email">Akun Gmail :</label><br />
+                        <input name="email" id="emailedit" type="text" style="width:80%;border:1px solid blue"
+                            onchange="formatemail()" /><br /><br />
+                    </fieldset><br />
+                    <h3>Nama Pengguna dan Password saat Login</h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(160, 206, 243);">
+                        <label for="username">Nama Pengguna: </label><br />
+                        <input type="text" name="username" id="usernameedit" style="width:80%;border:1px solid blue"
+                            onchange="fnjangandobel()" />
+                        <br /><span id="jangandobel">...</span>
+                        <br /><br />
+                        <label for="password">Password :</label><br />
+                        <input type="password" name="password" id="passwordedit"
+                            style="width:80%;border:1px solid blue" /><br />
+                        <label id="lihatpasswordedit" for="checkboxlihatpasswordedit"><i class="fa fa-eye"></i> Lihat
+                            Password</label>
+                        <input type="checkbox" onclick="fnlihatpasswordedit()" id="checkboxlihatpasswordedit"
+                            style="display: none;"><br />
+                    </fieldset><br />
+                    <h3>Data Sekolah: </h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(185, 255, 127);">
+                        <label for="sekolah">Nama Sekolah:</label><br />
+                        <input type="text" name="sekolah" id="sekolahedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="kepsek_namalengkap">Nama Kepala Sekolah:</label><br />
+                        <input type="text" name="kepsek_namalengkap" id="kepsek_namalengkapedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="kepsek_nip">NIP Kepala Sekolah:</label><br />
+                        <input type="text" name="kepsek_nip" id="kepsek_nipedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+
+                    </fieldset>
+
+                    <h3>Data Diri Anda </h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(247, 240, 177);">
+                        <label for="guru_namalengkapedit">Nama Anda:</label><br />
+                        <input id="guru_namalengkapedit" name="guru_namalengkap" type="text"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="gurukelas_gmp">Anda sebagai Guru Kelas/Guru Mata Pelajaran:</label>
+                        <select id="gurukelas_gmpedit" name="gurukelas_gmp"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <option value="Guru Kelas">Guru Kelas</option>
+                        <option value="Guru Mapel">Guru Mapel</option>
+                        </select><br /><br />
+                        <label for="kelas">Kelas Anda mengajar</label><br />
+                        <input id="kelasedit" name="kelas" type="text"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="guru_nip">NIP :</label><br />
+                        <input id="guru_nipedit" name="guru_nip" style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="no_wa_user">No. WhatsApp :</label><br />
+                        <input id="no_wa_useredit" name="no_wa_user" type="tel"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="upl_avataredit"
+                            style="cursor:pointer;border:1px solid blue;background-color:#eee;padding:5px;border-radius:5px"><i
+                                class="fa fa-upload"></i> Upload Avatar</label><br />
+                        <img id="avatarkuedit"
+                            scr="https://1.bp.blogspot.com/-q57d59JTX8g/Xa-kAy6T0XI/AAAAAAAAOSo/seM01RU3Q_Q7BvLm73wC09BBsQMs05pYACLcBGAsYHQ/s320/LOGO%2BLAMASO.png"
+                            style="width:200px;border:1px solid red" />
+                        <div id="idpoto_potoguruedit" style="display: none;"></div>
+                        <!-- <input type="text" id="idpoto_potoguru" name="idpoto_potoguru" style="display: none;" /> -->
+                        <!-- <input type="text" name="filename" />
+                        <input type="text" name="dobel" /> -->
+                    </fieldset>
+                    <h3>Upload Data Siswa: </h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(255, 127, 244);">
+                        <label for="upnp_datasiswaedit"
+                            style="cursor:pointer;border:1px solid blue;background-color:#eee;padding:5px;border-radius:5px"><i
+                                class="fa fa-upload"></i> Upload Data Siswa (File Notepad)</label><br />
+                        <h5>Preview Data Siswa Anda</h5>
+                        <select id="prev_upload_datasiswaedit" style="width:250px;border:1px solid blue"></select>
+                        <!-- <input type="text" name="idnp_dataanak" id="idnp_dataanak" style="display:none" /> -->
+                        <div id="idnp_dataanakedit" style="display: none;"></div>
+                    </fieldset>
+                </form>
+                <input type="file" id="upnp_datasiswaedit" onchange="ungg_np_datasiswaedit()" style="display: none"
+                    accept="text/plain" />
+                <input type="file" id="upl_avataredit" onchange="ungg_avataredit()" style="display: none"
+                    accept="image/*" />
+                <div id="prosesloadingdaftaredit"></div>
+            </div>
+            <button onclick="tomboledituser()" id="registrasikanedit" class="login">Simpan</button>
+            <button onclick="document.getElementById('modaledituser').style.display='none'" id="tutupeksekusitambahuser"
+                class="login">Tutup</button>
         </div>
     </div>
 
