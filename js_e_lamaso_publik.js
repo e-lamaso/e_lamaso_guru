@@ -2921,8 +2921,17 @@ function Anjangsana() {
             // avatarpenyetatus.setAttribute("class", "w3-left w3-circle w3-margin-right");
             //var avatarnya = json.records[i].avatareuser;
             //var avatargantiid = avatarnya.replace("id=", "class=");
-            divclass1.innerHTML += json.records[i].avatareuser; //.replace("avatarlogin", "avatarstatus" + i);
+            // --> -- > //divclass1.innerHTML += json.records[i].avatareuser; //.replace("avatarlogin", "avatarstatus" + i);
             //divclass1.innerHTML += avatargantiid;
+            var idj = json.records[i].avatareuser;
+            var idavatar = document.getElementById("id_tabel_user").rows[idj].cells[13].innerHTML;
+            //  
+            var avatark = document.createElement("img")
+            avatark.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + idavatar);
+            avatark.setAttribute("style", "width:60px;height:60px;border:1px solid red");
+            avatark.setAttribute("class", "avatarlogin w3-circle");
+            avatark.setAttribute("onclick", "potodia('" + idj + "')")
+            divclass1.appendChild(avatark);
             divclass1.innerHTML += "<br/>";
 
 
@@ -3062,6 +3071,7 @@ function Anjangsana() {
             divclass1.appendChild(divtempattombol);
             divtempattombol.innerHTML += "<span class='w3-clear'></span> "; //<hr style='border-bottom:1px solid blue'/>";
 
+
             var jumlahkolom = 0;
             //var innerkoment ="";
             var kolomkomentar = document.createElement("div")
@@ -3078,12 +3088,21 @@ function Anjangsana() {
                 if (k.indexOf("avatarkomen") > -1 && json.records[i][k] !== "") {
                     jumlahkolom += 1
                     //cek id pengomentar
-                    var teks = json.records[i][k];
-                    var mulaidari = teks.indexOf("potodia(") + 8; // menghasilkan angka
-                    var sliceTek = teks.slice(mulaidari, teks.length - 4); // hasil = "potodia('14')">
-                    angka = parseInt(sliceTek);
+                    // var teks = json.records[i][k];
+                    // var mulaidari = teks.indexOf("potodia(") + 8; // menghasilkan angka
+                    // var sliceTek = teks.slice(mulaidari, teks.length - 4); // hasil = "potodia('14')">
+                    angka = json.records[i][k] * 1;
                     // kolomkomentar.innerHTML += "<hr/>"
-                    kolomkomentar.innerHTML += json.records[i][k]; //+ "id nih orang adalah =" + angka;
+                    //kolomkomentar.innerHTML += json.records[i][k]; //+ "id nih orang adalah =" + angka;
+                    //<img class="avatarlogin w3-circle" style="width:50px;height:50px;border:1px solid red;" src="https://drive.google.com/uc?export=view&id=1u6sB-N8M79FODkIsJ5Xn2CTQ8R4jrRkR" onclick="potodia(11)">
+                    var idimg = document.getElementById("id_tabel_user").rows[angka].cells[13].innerHTML
+                    var avkom = document.createElement("img");
+                    avkom.setAttribute("class", "avatarlogin w3-circle");
+                    avkom.setAttribute("style", "width:50px;height:50px;border:1px solid red");
+                    avkom.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + idimg)
+                    avkom.setAttribute("onclick", "potodia('" + angka + "')");
+                    kolomkomentar.appendChild(avkom);
+                    kolomkomentar.innerHTML += "";
 
                     //kolomkomentar.innerHTML += "<span class='w3-clear'></span>";
                     //var nodegambar = document.createTextNode(decodeURIComponent(json.records[i][k]));
@@ -3286,8 +3305,18 @@ function AnjangsanaUpdateterus() {
             // avatarpenyetatus.setAttribute("class", "w3-left w3-circle w3-margin-right");
             //var avatarnya = json.records[i].avatareuser;
             //var avatargantiid = avatarnya.replace("id=", "class=");
-            divclass1.innerHTML += json.records[i].avatareuser; //.replace("avatarlogin", "avatarstatus" + i);
+            //divclass1.innerHTML += json.records[i].avatareuser; //.replace("avatarlogin", "avatarstatus" + i);
             //divclass1.innerHTML += avatargantiid;
+            var idj = json.records[i].avatareuser;
+            var idavatar = document.getElementById("id_tabel_user").rows[idj].cells[13].innerHTML;
+            //  
+            var avatark = document.createElement("img")
+            avatark.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + idavatar);
+            avatark.setAttribute("style", "width:60px;height:60px;border:1px solid red");
+            avatark.setAttribute("class", "avatarlogin w3-circle");
+            avatark.setAttribute("onclick", "potodia('" + idj + "')")
+            divclass1.appendChild(avatark);
+
             divclass1.innerHTML += "<br/>";
 
 
@@ -3429,6 +3458,8 @@ function AnjangsanaUpdateterus() {
 
             var jumlahkolom = 0;
             //var innerkoment ="";
+            var jumlahkolom = 0;
+            //var innerkoment ="";
             var kolomkomentar = document.createElement("div")
             kolomkomentar.setAttribute("style", "border-bottom:1px solid grey;border-top:1px solid grey;padding:0px 0px 0px 10px");
             //kolomkomentar.setAttribute("class", "w3-left");
@@ -3443,12 +3474,22 @@ function AnjangsanaUpdateterus() {
                 if (k.indexOf("avatarkomen") > -1 && json.records[i][k] !== "") {
                     jumlahkolom += 1
                     //cek id pengomentar
-                    var teks = json.records[i][k];
-                    var mulaidari = teks.indexOf("potodia(") + 8; // menghasilkan angka
-                    var sliceTek = teks.slice(mulaidari, teks.length - 4); // hasil = "potodia('14')">
-                    angka = parseInt(sliceTek);
+                    // var teks = json.records[i][k];
+                    // var mulaidari = teks.indexOf("potodia(") + 8; // menghasilkan angka
+                    // var sliceTek = teks.slice(mulaidari, teks.length - 4); // hasil = "potodia('14')">
+                    // angka = parseInt(sliceTek);
+                    angka = json.records[i][k] * 1;
                     // kolomkomentar.innerHTML += "<hr/>"
-                    kolomkomentar.innerHTML += json.records[i][k]; //+ "id nih orang adalah =" + angka;
+                    //kolomkomentar.innerHTML += json.records[i][k]; //+ "id nih orang adalah =" + angka;
+                    //<img class="avatarlogin w3-circle" style="width:50px;height:50px;border:1px solid red;" src="https://drive.google.com/uc?export=view&id=1u6sB-N8M79FODkIsJ5Xn2CTQ8R4jrRkR" onclick="potodia(11)">
+                    var idimg = document.getElementById("id_tabel_user").rows[angka].cells[13].innerHTML
+                    var avkom = document.createElement("img");
+                    avkom.setAttribute("class", "avatarlogin w3-circle");
+                    avkom.setAttribute("style", "width:50px;height:50px;border:1px solid red");
+                    avkom.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + idimg)
+                    avkom.setAttribute("onclick", "potodia('" + angka + "')");
+                    kolomkomentar.appendChild(avkom);
+                    kolomkomentar.innerHTML += "";
 
                     //kolomkomentar.innerHTML += "<span class='w3-clear'></span>";
                     //var nodegambar = document.createTextNode(decodeURIComponent(json.records[i][k]));
@@ -3489,7 +3530,6 @@ function AnjangsanaUpdateterus() {
                 //kolomkomentar.innerHTML += "<span class='w3-clear'></span>"
                 //kolomteks.innerHTML = "";
             }
-
             //hitung dulu jumlah pengomentar dan tetapkan keynya;
             // var keynya = [];
             // for(k in json.records[i]){
@@ -3760,7 +3800,8 @@ function generatestatusanjangsana() {
     var nowauser = sumbertabeluser.rows[idsedanglogin].cells[20].innerHTML;
     // var avatartanya = document.getElementById("avatarlogin").outerHTML;
     // var avatartanpaid = avatartanya.replace('id="avatarlogin"', '');
-    teks1.value = document.getElementById("avatarlogin").outerHTML;
+    // teks1.value = document.getElementById("avatarlogin").outerHTML;
+    teks1.value = document.getElementById("keyidpendaftar").innerHTML - 1;
     // teks1.value = avatartanpaid;
     teks2.textContent = document.getElementById("teksinputstatus").innerHTML;
 
@@ -3871,11 +3912,12 @@ function kirimkomentar(id) {
     // htmlavatarkomen.setAttribute("onclick", "potodia(" + idkomentator + ")");
     //var htmlavatarkomen = document.getElementById("avatarlogin").outerHTML;
 
-
+    var idavatar = document.getElementById("keyidpendaftar").innerHTML - 1;
     var isikomen = document.getElementById("tekskomenbaru" + idtombolstatus).innerHTML
     var html = yangpunyastatus + "=" + barisss;
     html += "&col=" + encodeURIComponent(kol);
-    html += "&" + key1 + "=" + encodeURIComponent(htmlavatarkomen);
+    //html += "&" + key1 + "=" + encodeURIComponent(htmlavatarkomen);
+    html += "&" + key1 + "=" + encodeURIComponent(idavatar);
     html += "&" + key2 + "=" + encodeURIComponent(namasiapakomen);
     html += "&" + key3 + "=" + encodeURIComponent(d);
     html += "&" + key4 + "=" + encodeURIComponent(isikomen);
