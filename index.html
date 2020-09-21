@@ -1556,10 +1556,12 @@
                         <img id="avatarkuedit"
                             scr="https://1.bp.blogspot.com/-q57d59JTX8g/Xa-kAy6T0XI/AAAAAAAAOSo/seM01RU3Q_Q7BvLm73wC09BBsQMs05pYACLcBGAsYHQ/s320/LOGO%2BLAMASO.png"
                             style="width:200px;border:1px solid red" />
-                        <div id="idpoto_potoguruedit" style="display: none;"></div>
-                        <!-- <input type="text" id="idpoto_potoguru" name="idpoto_potoguru" style="display: none;" /> -->
-                        <!-- <input type="text" name="filename" />
-                        <input type="text" name="dobel" /> -->
+                        <div id="idpoto_potoguruedit" style="display: none;">
+                            <input type="text" id="idpoto_potoguru" name="idpoto_potoguru" style="display: block;" />
+                            <!-- <input type="text" name="filename" />
+                            <input type="text" name="mimeType" /> -->
+                            <!-- <input type="text" name="dobel" /> -->
+                        </div>
                     </fieldset>
                     <h3>Upload Data Siswa: </h3>
                     <fieldset
@@ -1569,8 +1571,11 @@
                                 class="fa fa-upload"></i> Upload Data Siswa (File Notepad)</label><br />
                         <h5>Preview Data Siswa Anda</h5>
                         <select id="prev_upload_datasiswaedit" style="width:250px;border:1px solid blue"></select>
-                        <!-- <input type="text" name="idnp_dataanak" id="idnp_dataanak" style="display:none" /> -->
-                        <div id="idnp_dataanakedit" style="display: none;"></div>
+                        <div id="idnp_dataanakedit" style="display: none;">
+                            <!-- <input type="text" name="idnp_dataanak" id="idnp_dataanak" style="display:block" /> -->
+                            <input type="text" name="idnp_datasiswa" id="idnp_datasiswa" style="display:block" />
+
+                        </div>
                     </fieldset>
                 </form>
                 <input type="file" id="upnp_datasiswaedit" onchange="ungg_np_datasiswaedit()" style="display: none"
