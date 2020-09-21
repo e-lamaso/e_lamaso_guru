@@ -1049,7 +1049,7 @@ function unggahmateri() { // upload offline atau ambil file dari drive PC/root H
         document.getElementById("divsayasetuju").style.display = "block";
         document.getElementById("sayasetuju").checked = false;
         sayasetuju();
-
+        item ="";
         item = document.getElementById("uploadmateri").files[0];
 
         var fr = new FileReader();
