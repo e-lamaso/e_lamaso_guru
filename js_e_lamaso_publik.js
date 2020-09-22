@@ -20,6 +20,31 @@ var timerAnjangsana;
 /// script JQuery
 $(document).ready(function () {
     //timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
+    var hcpt = document.getElementById("hakcipta");
+    if (hcpt == null) {
+        var hcpt = document.createElement("div");
+        2
+        hcpt.setAttribute("id", "hakcipta");
+        hcpt.setAttribute("class", "w3-main");
+        hcpt.setAttribute("style", "margin-left:300px;margin-bottom:140px;margin-top:220px;text-align:center;font-size:10px")
+        var thcpt = document.createTextNode("@2020 Created By. Ade Andriansyah Kunjungi ");
+        hcpt.appendChild(thcpt)
+        var an = document.createElement("a");
+        an.setAttribute("href", "https://syahandrianeda.blogspot.com");
+        an.setAttribute("target", "_blank");
+        an.innerHTML = "Blog Pribadi";
+        hcpt.appendChild(an);
+        hcpt.innerHTML += " atau ";
+        var an = document.createElement("a");
+        an.setAttribute("href", "https://www.sdnratujaya1.net/");
+        an.setAttribute("target", "_blank");
+        an.innerHTML = "Web Sekolah";
+        hcpt.appendChild(an);
+
+        //\r\n Kunjungi blog: <a href='https://syahandrianeda.blogspot.com' target='_blank'>Blog Pribadi</a> atau <a href='https://www.sdnratujaya1.net/' target='_blank'> Web Sekolah</a> ");
+        document.body.appendChild(hcpt);
+        document.body.appendChild(hcpt)
+    }
 
     // Panggil data sekolah
     var namasekolah, namakota, tekstapel, tapel
