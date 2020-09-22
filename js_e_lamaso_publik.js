@@ -2633,7 +2633,10 @@ function koreksiessay(bid) {
         tengahdulu.innerHTML += " Cetak Jawaban ini: "
         tengahdulu.appendChild(tombolprint);
         //document.getElementById("isipetunjuk").appendChild(tengahdulu);
-        document.getElementById("isipetunjuk").after(tengahdulu);
+               document.getElementById("isipetunjuk").innerHTML += "<br/><br/>";
+        document.getElementById("isipetunjuk").appendChild(tengahdulu);
+        document.getElementById("isipetunjuk").innerHTML += "<br/><br/><br/><br/>";
+
 
     })
 
