@@ -20,6 +20,7 @@ var timerAnjangsana;
 /// script JQuery
 $(document).ready(function () {
     //timerAnjangsana = setInterval(AnjangsanaUpdateterus, 5000)
+
     var hcpt = document.getElementById("hakcipta");
     if (hcpt == null) {
         var hcpt = document.createElement("div");
@@ -1074,7 +1075,7 @@ function unggahmateri() { // upload offline atau ambil file dari drive PC/root H
         document.getElementById("divsayasetuju").style.display = "block";
         document.getElementById("sayasetuju").checked = false;
         sayasetuju();
-        item ="";
+        item = "";
         item = document.getElementById("uploadmateri").files[0];
 
         var fr = new FileReader();
@@ -1480,9 +1481,9 @@ function brkline(teks) { //coba
             var idopsi = arpg[0]; // hasilnya: 1A
             //var abjad = idopsi.slice(1, 2); // hasilnya A
             //var nosoal = idopsi.slice(0, 1); // hasilnya 1
-             var nosoal = parseInt(idopsi);
+            var nosoal = parseInt(idopsi);
             var abjad = idopsi.replace(nosoal, "");
-            
+
             if (abjad === "A") {
                 opsipg += "<hr style='border-top:1px solid olive'/>";
                 opsipg += "<ol style='list-style-type:upper-alpha;margin:5px 5px 0px 20px;padding:0' ><li><input class='calc' type='radio' style='display:none' name='soal" + nosoal + "' id='" + idopsi + "'/><label class='opsi' for='" + idopsi + "'>"; // Khusus opsi A, ada elemen OL lalu dilanjut teksnya
@@ -2273,6 +2274,9 @@ function getdaftarnilai() {
     var th5 = document.createElement("th");
     th5.innerHTML = "Jumlah Nilai";
     tr.appendChild(th5);
+    var th6 = document.createElement("th");
+    th6.innerHTML = "Lembar Jawaban Siswa";
+    tr.appendChild(th6);
 
     for (var i = 0; i < sumberkelasnama.length; i++) {
         var brs = tabeldatanilai.insertRow(-1);
@@ -2294,6 +2298,8 @@ function getdaftarnilai() {
             var cell1 = brs.insertCell(-1);
             cell1.innerHTML = "'-";
         }
+        var cell1 = brs.insertCell(-1);
+        cell1.innerHTML = "'-";
         var cell1 = brs.insertCell(-1);
         cell1.innerHTML = "'-"
     }
@@ -2413,6 +2419,10 @@ function getdaftarnilai() {
                             baristabel[a].cells[4].innerHTML = (((json.records[b].nilaiPG * 1 + json.records[b].nilaiEssay * 1) / 2).toFixed(2)).replace(".", ",");
 
                         }
+                        var printlj = document.createElement("button");
+                        printlj.setAttribute("onclick", "printessay('" + b + "<|>" + json.records[b].html_jawaban + "')")
+                        printlj.innerHTML = "Lembar Jawaban"
+                        baristabel[a].cells[5].appendChild(printlj)
                     }
 
                 }
@@ -2615,7 +2625,7 @@ function koreksiessay(bid) {
         //$("#output").html(brkline(json))
         document.getElementById("judulpetunjuk").innerHTML = "Lembar Jawaban Siswa";
         document.getElementById("isipetunjuk").innerHTML += "<div style='border:1px solid blue;padding:5px;'> Petunjuk:<br/><br/>Isikan nilai pada masing-masing jawaban siswa dengan rentang nilai dari 0 - 100<br/><br/>Setelah Anda selesai mengisi nilai, maka klik tombol <b>Beri Nilai</b> pada laman paling bawah.</div>";
-        document.getElementById("isipetunjuk").innerHTML += brkline(json);
+        document.getElementById("isipetunjuk").innerHTML += brkline(decodeURI(json));
         var elEssay = document.getElementsByClassName("koleksilj")
         if (elEssay.length !== 0) {
             for (i = 0; i < elEssay.length; i++) {
@@ -2661,10 +2671,80 @@ function koreksiessay(bid) {
         tengahdulu.innerHTML += " Cetak Jawaban ini: "
         tengahdulu.appendChild(tombolprint);
         //document.getElementById("isipetunjuk").appendChild(tengahdulu);
-               document.getElementById("isipetunjuk").innerHTML += "<br/><br/>";
+        document.getElementById("isipetunjuk").innerHTML += "<br/><br/>";
         document.getElementById("isipetunjuk").appendChild(tengahdulu);
         document.getElementById("isipetunjuk").innerHTML += "<br/><br/><br/><br/>";
 
+    })
+
+
+
+}
+
+function printessay(bid) {
+    //   alert("Anda akan mengoreksi data json " + bid + " dengan nilai b = " + bid.split("<|>")[0] + " dan idfile = " + bid.split("<|>")[1])
+    var id = bid.split("<|>")[1];
+    //document.getElementById("output").innerHTML="<i class='fa fa-spin fa-spinner'></i>";
+    document.getElementById('modalpetunjuk').style.display = 'block';
+    document.getElementById("judulpetunjuk").innerHTML = "<i class='fa fa-spin fa-spinner'></i>";
+
+    var idm = encodeURIComponent(id);
+    var en = "?html_jawaban=" + idm;
+    var url = script_url + en + "&action=lembarjawaban";
+
+    $.getJSON(url, function (json) {
+        //$("#output").html(brkline(json))
+        document.getElementById("judulpetunjuk").innerHTML = "Lembar Jawaban Siswa";
+        document.getElementById("isipetunjuk").innerHTML += "<div style='border:1px solid blue;padding:5px;'> Petunjuk:<br/><br/>Isikan nilai pada masing-masing jawaban siswa dengan rentang nilai dari 0 - 100<br/><br/>Setelah Anda selesai mengisi nilai, maka klik tombol <b>Beri Nilai</b> pada laman paling bawah.</div>";
+        document.getElementById("isipetunjuk").innerHTML += brkline(decodeURI(json));
+        // var elEssay = document.getElementsByClassName("koleksilj")
+        // if (elEssay.length !== 0) {
+        //     for (i = 0; i < elEssay.length; i++) {
+        //         var idEl = elEssay[i].getAttribute("id");
+        //         var inidEl = idEl.replace("untuklj", "");
+        //         var tempattombol = document.getElementById("untuklj" + inidEl);
+        //         var tombolsatu = document.createElement("input");
+        //         tombolsatu.setAttribute("type", "number");
+        //         tombolsatu.setAttribute("class", "koreksisoal");
+        //         tombolsatu.setAttribute("onchange", "updatenilaikoreksi()");
+        //         tempattombol.innerHTML = "Beri Nilai :";
+        //         tempattombol.appendChild(tombolsatu);
+
+
+        //     }
+        // }
+
+        var tengahdulu = document.createElement("center");
+        tengahdulu.setAttribute("style", "background-color:yellow");
+        // var inputidbaris = document.createElement("input");
+        // inputidbaris.setAttribute("id", "brs");
+        // inputidbaris.setAttribute("value", bid.split("<|>")[0]);
+        // inputidbaris.setAttribute("disabled", "true");
+        // inputidbaris.setAttribute("style", "display:none");
+
+        // var inputnilaikoreksi = document.createElement("input");
+        // inputnilaikoreksi.setAttribute("type", "number");
+        // inputnilaikoreksi.setAttribute("id", "nilaiakhiressay");
+        // inputnilaikoreksi.setAttribute("disabled", "true");
+
+        // var tombolkirim = document.createElement("button");
+        // tombolkirim.setAttribute("onclick", "siapkirimnilai()")
+        // tombolkirim.innerHTML = "Beri Nilai";
+        var tombolprint = document.createElement("button")
+        tombolprint.setAttribute("onclick", "printlembarjawaban()")
+        tombolprint.innerHTML = "<i class='fa fa-print'> Print "
+
+
+        // tengahdulu.appendChild(inputidbaris);
+        // tengahdulu.innerHTML += "Preview Nilai Essay : "
+        // tengahdulu.appendChild(inputnilaikoreksi);
+        // tengahdulu.appendChild(tombolkirim);
+        tengahdulu.innerHTML += "<i class='fa fa-print'></i> Cetak Lembar Jawaban ini: "
+        tengahdulu.appendChild(tombolprint);
+        //document.getElementById("isipetunjuk").appendChild(tengahdulu);
+        document.getElementById("isipetunjuk").innerHTML += "<br/><br/>";
+        document.getElementById("isipetunjuk").appendChild(tengahdulu);
+        document.getElementById("isipetunjuk").innerHTML += "<br/><br/><br/><br/>";
 
     })
 
@@ -3496,7 +3576,8 @@ function AnjangsanaUpdateterus() {
             //kolomkomentar.setAttribute("class", "w3-left");
             kolomkomentar.innerHTML = "";
             var kolomteks = document.createElement("div");
-            kolomteks.setAttribute("class", "tempatpengomentarnya")
+            kolomteks.setAttribute("class", "tempatpengomentarnya");
+
 
             kolomteks.innerHTML = "";
             var angka;
@@ -3554,7 +3635,8 @@ function AnjangsanaUpdateterus() {
                 }
                 if (k.indexOf("isikomen") > -1 && json.records[i][k] !== "") {
                     //kolomkomentar.innerHTML += json.records[i][k];
-                    kolomteks.innerHTML += json.records[i][k]
+
+                    kolomteks.innerHTML += json.records[i][k]; //.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
                     kolomkomentar.appendChild(kolomteks);
                 }
                 //  kolomkomentar.appendChild(kolomteks)
